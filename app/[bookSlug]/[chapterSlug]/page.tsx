@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { useParams } from "next/navigation";
-import { ChapterMenu } from "@/components/reader/chapter-menu";
+import ChapterMenu from "@/components/reader/chapter-menu";
 import { ReaderContent } from "@/components/reader/reader-content";
 import { ReaderSettings } from "@/components/reader/reader-settings";
 import { useLocalStorage } from "usehooks-ts";

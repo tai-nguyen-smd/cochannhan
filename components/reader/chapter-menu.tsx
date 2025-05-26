@@ -23,6 +23,7 @@ import {
 } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { Book, Chapter, ChapterListItem } from "@/types/type";
+import { memo } from "react";
 
 interface ChapterMenuProps {
   book: Book;
@@ -30,7 +31,7 @@ interface ChapterMenuProps {
   currentChapter: Chapter;
 }
 
-export function ChapterMenu({
+function ChapterMenu({
   book,
   chapterList,
   currentChapter,
@@ -227,3 +228,5 @@ export function ChapterMenu({
     </Sheet>
   );
 }
+
+export default memo(ChapterMenu);
