@@ -1,9 +1,9 @@
-"use client"
+"use client";
 
-import Link from "next/link"
-import { Button } from "@/components/ui/button"
-import { ModeToggle } from "@/components/ui/mode-toggle"
-import { Book, Heart } from "lucide-react"
+import Link from "next/link";
+import { Button } from "@/components/ui/button";
+import { ModeToggle } from "@/components/ui/mode-toggle";
+import { Book, Heart } from "lucide-react";
 
 export function Header() {
   return (
@@ -11,18 +11,16 @@ export function Header() {
       <div className="container mx-auto px-4 h-14 flex items-center justify-between">
         <Link href="/" className="flex items-center space-x-2">
           <Book className="h-5 w-5 sm:h-6 sm:w-6" />
-          <span className="font-bold text-base sm:text-lg">Thư Viện Sách</span>
+          <span className="font-bold text-base sm:text-lg">Cổ Chân Nhân</span>
         </Link>
 
         <nav className="flex items-center space-x-2 sm:space-x-4">
-          <Link href="/">
-            <Button variant="ghost" size="sm" className="text-xs sm:text-sm">
-              <span className="hidden sm:inline">Trang Chủ</span>
-              <span className="sm:hidden">Chủ</span>
-            </Button>
-          </Link>
           <Link href="/support">
-            <Button variant="ghost" size="sm" className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm">
+            <Button
+              variant="ghost"
+              size="sm"
+              className="flex items-center gap-1 sm:gap-2 text-xs sm:text-sm"
+            >
               <Heart className="h-3 w-3 sm:h-4 sm:w-4" />
               <span className="hidden sm:inline">Ủng Hộ Tôi</span>
               <span className="sm:hidden">Ủng Hộ</span>
@@ -32,5 +30,5 @@ export function Header() {
         </nav>
       </div>
     </header>
-  )
+  );
 }
