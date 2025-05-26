@@ -1,0 +1,126 @@
+"use client";
+
+import { useState, useEffect } from "react";
+import { useParams } from "next/navigation";
+import { ChapterMenu } from "@/components/reader/chapter-menu";
+import { ReaderContent } from "@/components/reader/reader-content";
+import { ReaderSettings } from "@/components/reader/reader-settings";
+import { useLocalStorage } from "usehooks-ts";
+import { LOCAL_STORAGE_KEY } from "@/constants/common";
+import { useServices } from "@/hooks/use-services";
+import { Chapter } from "@/types/type";
+
+export default function ChapterPage() {
+  const params = useParams();
+  const bookSlug = params.bookSlug as string;
+  const chapterSlug = params.chapterSlug as string;
+  const [chapterData, setChapterData] = useState<{
+    currentChapter: Chapter | null;
+    nextChapter: Chapter | null;
+    prevChapter: Chapter | null;
+  }>({
+    currentChapter: null,
+    nextChapter: null,
+    prevChapter: null,
+  });
+
+  const { book, chapterList, loading, fetchChapter } = useServices(bookSlug);
+  const [localReaderSettings, setLocalReaderSettings] = useLocalStorage(
+    LOCAL_STORAGE_KEY.READER_SETTINGS,
+    {
+      fontSize: 16,
+      fontFamily: "Inter",
+      theme: "light",
+      lineHeight: 1.6,
+    }
+  );
+  const [readerSettings, setReaderSettings] = useState(localReaderSettings);
+
+  useEffect(() => {
+    const loadBook = async () => {
+      try {
+        const chapterData = await fetchChapter(bookSlug, chapterSlug);
+
+        // Save current chapter to localStorage
+        if (chapterData) {
+          setChapterData(chapterData);
+          localStorage.setItem(
+            LOCAL_STORAGE_KEY.CURRENT_CHAPTER(bookSlug),
+            chapterData.currentChapter?.id?.toString() ?? ""
+          );
+        }
+      } catch (error) {
+        console.error("Error loading book:", error);
+      }
+    };
+
+    if (bookSlug) {
+      loadBook();
+    }
+  }, [bookSlug, chapterSlug]);
+
+  useEffect(() => {
+    setLocalReaderSettings(readerSettings);
+  }, [readerSettings]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-8 text-center">
+          <div className="animate-pulse">
+            <div className="h-8 bg-gray-200 rounded w-1/3 mx-auto mb-4"></div>
+            <div className="h-4 bg-gray-200 rounded w-1/4 mx-auto"></div>
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  if (!book) {
+    return (
+      <div className="min-h-screen bg-background">
+        <div className="container mx-auto px-4 py-8 text-center">
+          <h1 className="text-2xl font-bold mb-4">Không tìm thấy sách</h1>
+          <p className="text-muted-foreground">
+            Slug "{bookSlug}" không tồn tại trong hệ thống.
+          </p>
+        </div>
+      </div>
+    );
+  }
+
+  return (
+    <div
+      className="min-h-screen bg-background"
+      data-theme={readerSettings.theme}
+    >
+      <div className="flex flex-col h-[calc(100vh-3.5rem)]">
+        <div className="flex items-center justify-between p-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
+          {book && chapterData.currentChapter && (
+            <ChapterMenu
+              chapterList={chapterList}
+              book={book}
+              currentChapter={chapterData.currentChapter}
+            />
+          )}
+          {readerSettings && (
+            <ReaderSettings
+              settings={readerSettings}
+              onSettingsChange={setReaderSettings}
+            />
+          )}
+        </div>
+        {chapterData.currentChapter && (
+          <ReaderContent
+            book={book}
+            currentChapter={chapterData.currentChapter}
+            settings={readerSettings}
+            chapterList={chapterList}
+            nextChapter={chapterData.nextChapter}
+            prevChapter={chapterData.prevChapter}
+          />
+        )}
+      </div>
+    </div>
+  );
+}
