@@ -1,0 +1,27 @@
+{
+  "name": "Thư Viện Sách Điện Tử",
+  "short_name": "Thư Viện Sách",
+  "description": "Đọc sách trực tuyến với trải nghiệm tuyệt vời",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#ffffff",
+  "theme_color": "#000000",
+  "orientation": "portrait-primary",
+  "icons": [
+    {
+      "src": "/icon-192x192.png",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "maskable any"
+    },
+    {
+      "src": "/icon-512x512.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable any"
+    }
+  ],
+  "categories": ["books", "education", "entertainment"],
+  "lang": "vi",
+  "dir": "ltr"
+}
