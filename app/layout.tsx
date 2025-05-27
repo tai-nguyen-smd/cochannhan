@@ -25,7 +25,7 @@ export default function RootLayout({
     .map((f) => f.variable)
     .join(" ");
   return (
-    <html lang="vi">
+    <html lang="vi" suppressHydrationWarning>
       <head>
         <link rel="icon" href="/favicon.ico" />
         <link rel="apple-touch-icon" href="/icon-192x192.png" />

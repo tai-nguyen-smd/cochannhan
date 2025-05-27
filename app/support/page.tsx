@@ -1,5 +1,11 @@
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card"
-import { Heart, Coffee, Gift } from "lucide-react"
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
+import { Heart, Coffee, Gift } from "lucide-react";
 
 export default function SupportPage() {
   return (
@@ -12,8 +18,8 @@ export default function SupportPage() {
               Ủng Hộ Tôi
             </h1>
             <p className="text-muted-foreground text-lg">
-              Nếu bạn thích dự án này và muốn ủng hộ tôi tiếp tục phát triển, bạn có thể ủng hộ qua các hình thức dưới
-              đây
+              Nếu bạn thích dự án này và muốn ủng hộ tôi tiếp tục phát triển,
+              bạn có thể ủng hộ qua các hình thức dưới đây
             </p>
           </div>
 
@@ -24,45 +30,21 @@ export default function SupportPage() {
                   <Coffee className="h-5 w-5" />
                   Mua cho tôi một ly cà phê
                 </CardTitle>
-                <CardDescription>Ủng hộ qua MoMo hoặc Banking</CardDescription>
+                <CardDescription>Ủng hộ qua QR Code</CardDescription>
               </CardHeader>
               <CardContent className="space-y-4">
                 <div className="text-center">
                   <div className="bg-white p-4 rounded-lg inline-block mb-4">
-                    <img src="/placeholder.svg?height=200&width=200" alt="QR Code MoMo" className="w-48 h-48" />
-                  </div>
-                  <p className="font-semibold">Quét mã QR MoMo</p>
-                  <p className="text-sm text-muted-foreground">Số điện thoại: 0123456789</p>
-                </div>
-              </CardContent>
-            </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle className="flex items-center gap-2">
-                  <Gift className="h-5 w-5" />
-                  Chuyển khoản ngân hàng
-                </CardTitle>
-                <CardDescription>Thông tin tài khoản ngân hàng</CardDescription>
-              </CardHeader>
-              <CardContent className="space-y-4">
-                <div className="space-y-3">
-                  <div>
-                    <p className="font-semibold">Ngân hàng: Vietcombank</p>
-                    <p className="text-sm text-muted-foreground">Chi nhánh: TP. Hồ Chí Minh</p>
-                  </div>
-                  <div>
-                    <p className="font-semibold">Số tài khoản: 1234567890</p>
-                    <p className="text-sm text-muted-foreground">Chủ tài khoản: NGUYEN VAN A</p>
-                  </div>
-                  <div className="bg-white p-4 rounded-lg text-center">
                     <img
-                      src="/placeholder.svg?height=200&width=200"
-                      alt="QR Code Banking"
-                      className="w-48 h-48 mx-auto"
+                      src="/images/QR.jpg"
+                      alt="QR Code MoMo"
+                      className="w-96 h-auto"
                     />
-                    <p className="text-sm text-muted-foreground mt-2">Quét mã QR Banking</p>
                   </div>
+                  <p className="font-semibold">Quét mã QR</p>
+                  <p className="text-sm text-muted-foreground">
+                    Momo: 0764466624
+                  </p>
                 </div>
               </CardContent>
             </Card>
@@ -79,31 +61,39 @@ export default function SupportPage() {
                     <Coffee className="h-6 w-6 text-blue-600 dark:text-blue-400" />
                   </div>
                   <h3 className="font-semibold mb-2">Duy trì server</h3>
-                  <p className="text-sm text-muted-foreground">Chi phí hosting và domain để duy trì website</p>
+                  <p className="text-sm text-muted-foreground">
+                    Chi phí hosting và domain để duy trì website
+                  </p>
                 </div>
                 <div className="text-center">
                   <div className="bg-green-100 dark:bg-green-900 p-3 rounded-full w-12 h-12 mx-auto mb-3 flex items-center justify-center">
                     <Gift className="h-6 w-6 text-green-600 dark:text-green-400" />
                   </div>
                   <h3 className="font-semibold mb-2">Phát triển tính năng</h3>
-                  <p className="text-sm text-muted-foreground">Thêm nhiều tính năng mới và cải thiện trải nghiệm</p>
+                  <p className="text-sm text-muted-foreground">
+                    Thêm nhiều tính năng mới và cải thiện trải nghiệm
+                  </p>
                 </div>
                 <div className="text-center">
                   <div className="bg-red-100 dark:bg-red-900 p-3 rounded-full w-12 h-12 mx-auto mb-3 flex items-center justify-center">
                     <Heart className="h-6 w-6 text-red-600 dark:text-red-400" />
                   </div>
                   <h3 className="font-semibold mb-2">Động lực</h3>
-                  <p className="text-sm text-muted-foreground">Sự ủng hộ của bạn là động lực để tôi tiếp tục</p>
+                  <p className="text-sm text-muted-foreground">
+                    Sự ủng hộ của bạn là động lực để tôi tiếp tục
+                  </p>
                 </div>
               </div>
             </CardContent>
           </Card>
 
           <div className="text-center mt-8">
-            <p className="text-muted-foreground">Cảm ơn bạn đã sử dụng và ủng hộ dự án! ❤️</p>
+            <p className="text-muted-foreground">
+              Cảm ơn bạn đã sử dụng và ủng hộ dự án! ❤️
+            </p>
           </div>
         </div>
       </main>
     </div>
-  )
+  );
 }

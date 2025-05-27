@@ -29,6 +29,7 @@ import { Button } from "../ui/button";
 import { ScrollArea } from "../ui/scroll-area";
 import { Badge } from "../ui/badge";
 import { calculateProgress } from "@/lib/books";
+import ChapterMenu from "./chapter-menu";
 
 interface BookOverviewProps {
   book: Book;
@@ -171,34 +172,8 @@ export function BookOverview({ book, chapters }: BookOverviewProps) {
                 </CardTitle>
                 <CardDescription>Chọn chương để bắt đầu đọc</CardDescription>
               </CardHeader>
-              <CardContent>
-                <ScrollArea className="h-[600px]">
-                  <div className="space-y-2">
-                    {chapters.map((chapter) => (
-                      <div
-                        key={chapter.id}
-                        className="flex items-center gap-3 p-3 rounded-lg border hover:bg-accent cursor-pointer transition-colors"
-                        onClick={() => handleChapterSelect(chapter)}
-                      >
-                        <div className="flex-1 min-w-0">
-                          <h3 className="font-medium line-clamp-1">
-                            {chapter.title}
-                          </h3>
-                        </div>
-
-                        <div className="flex items-center gap-2">
-                          {bookmarks?.includes(chapter.id) && (
-                            <Bookmark className="h-4 w-4 text-yellow-500" />
-                          )}
-
-                          {currentChapter?.id === chapter.id && (
-                            <Badge variant="secondary">Đang đọc</Badge>
-                          )}
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                </ScrollArea>
+              <CardContent className="p-0 sm:p-2">
+                <ChapterMenu book={book} chapterList={chapters} currentChapter={currentChapter} />
               </CardContent>
             </Card>
           </div>

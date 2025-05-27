@@ -73,6 +73,7 @@ export default function ChapterPage() {
     <div
       className="min-h-screen bg-background"
       data-theme={readerSettings.theme}
+      suppressHydrationWarning
     >
       <div className="flex flex-col h-[calc(100vh-3.5rem)]">
         <div className="flex items-center gap-4 p-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60 sticky top-0 z-50">
