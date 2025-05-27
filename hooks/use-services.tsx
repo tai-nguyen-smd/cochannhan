@@ -13,16 +13,14 @@ export const useServices = (slug: string) => {
   );
 
   const fetchBook = async (slug: string) => {
-    setLoading(true);
-    const book = await findBookBySlug(slug);
+    const book = findBookBySlug(slug);
     setBook(book);
-    setLoading(false);
     return book;
   };
 
   const fetchChapterList = async (bookSlug: string) => {
-    setLoading(true);
     if (chapterList.length) {
+      setLoading(false);
       return chapterList;
     }
     const chapters = await findChapterList(bookSlug);

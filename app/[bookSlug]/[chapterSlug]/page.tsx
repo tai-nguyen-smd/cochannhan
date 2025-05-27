@@ -12,9 +12,11 @@ import { Chapter } from "@/types/type";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 import { LoadingSpinner } from "@/components/ui/loading-sprinner";
+import { useRouter } from "next/navigation";
 
 export default function ChapterPage() {
   const params = useParams();
+  const router = useRouter();
   const bookSlug = params.bookSlug as string;
   const chapterSlug = params.chapterSlug as string;
   const [chapterData, setChapterData] = useState<{
@@ -95,7 +97,7 @@ export default function ChapterPage() {
     >
       <div className="flex flex-col h-[calc(100vh-3.5rem)]">
         <div className="flex items-center gap-4  p-4 border-b bg-background/95 backdrop-blur supports-[backdrop-filter]:bg-background/60">
-          <Button>
+          <Button onClick={() => router.replace(`/${bookSlug}`)}>
             <ArrowLeft />
             Back
           </Button>
