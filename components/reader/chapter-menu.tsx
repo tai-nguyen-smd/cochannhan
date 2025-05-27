@@ -16,6 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { useRouter } from "next/navigation";
 import { Chapter, Book, ChapterListItem } from "@/types/type";
+import { LOCAL_STORAGE_KEY } from "@/constants/common";
+import { useLocalStorage } from "usehooks-ts";
 
 interface ChapterMenuProps {
   book: Book;
@@ -27,7 +29,10 @@ function ChapterMenu({ book, chapterList, currentChapter }: ChapterMenuProps) {
   const router = useRouter();
   const [isOpen, setIsOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState("");
-  const [bookmarks, setBookmarks] = useState<string[]>([]);
+  const [bookmarks, setBookmarks] = useLocalStorage<string[]>(
+    LOCAL_STORAGE_KEY.BOOKMARKS(book.slug),
+    []
+  );
 
   const toggleBookmark = (chapterId: string) => {
     setBookmarks((prev) =>

@@ -37,18 +37,12 @@ interface BookOverviewProps {
 
 export function BookOverview({ book, chapters }: BookOverviewProps) {
   const router = useRouter();
-  const [bookmarks, setBookmarks] = useState<string[]>([]);
   const currentChapter = useReadLocalStorage<Chapter | null>(
     LOCAL_STORAGE_KEY.CURRENT_CHAPTER(book.slug)
   );
-
-  useEffect(() => {
-    const savedBookmarks = localStorage.getItem(`book-${book.slug}-bookmarks`);
-
-    if (savedBookmarks) {
-      setBookmarks(JSON.parse(savedBookmarks));
-    }
-  }, [book.slug]);
+  const bookmarks = useReadLocalStorage<string[]>(
+    LOCAL_STORAGE_KEY.BOOKMARKS(book.slug)
+  );
 
   const handleContinueReading = () => {
     const chapter =
@@ -114,7 +108,13 @@ export function BookOverview({ book, chapters }: BookOverviewProps) {
                         %
                       </span>
                     </div>
-                    <Progress value={calculateProgress(currentChapter.order, chapters.length)} className="h-2" />
+                    <Progress
+                      value={calculateProgress(
+                        currentChapter.order,
+                        chapters.length
+                      )}
+                      className="h-2"
+                    />
                     <div className="text-xs text-muted-foreground">
                       {currentChapter?.order} / {chapters.length}
                     </div>
@@ -187,7 +187,7 @@ export function BookOverview({ book, chapters }: BookOverviewProps) {
                         </div>
 
                         <div className="flex items-center gap-2">
-                          {bookmarks.includes(chapter.id) && (
+                          {bookmarks?.includes(chapter.id) && (
                             <Bookmark className="h-4 w-4 text-yellow-500" />
                           )}
 

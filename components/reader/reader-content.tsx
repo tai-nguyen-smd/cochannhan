@@ -7,6 +7,7 @@ import ReactMarkdown from "react-markdown";
 import { useSwipe } from "@/hooks/use-swipe";
 import { Book, Chapter, ChapterListItem, ReaderSettings } from "@/types/type";
 import { calculateProgress } from "@/lib/books";
+import { cn } from "@/lib/utils";
 
 interface ReaderContentProps {
   book: Book;
@@ -129,10 +130,12 @@ export function ReaderContent({
       {/* Content */}
       <div className="flex-1 overflow-auto" style={themeStyles}>
         <div
-          className="max-w-4xl mx-auto p-4 sm:p-6 lg:p-8"
+          className={cn(
+            "max-w-4xl mx-auto p-4 sm:p-6 lg:p-8",
+            settings.fontFamily
+          )}
           style={{
             fontSize: `${settings.fontSize}px`,
-            fontFamily: settings.fontFamily,
             lineHeight: settings.lineHeight,
             color: themeStyles.color,
           }}

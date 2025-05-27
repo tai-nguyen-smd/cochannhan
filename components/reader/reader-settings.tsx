@@ -1,47 +1,65 @@
-"use client"
+"use client";
 
-import { useState } from "react"
-import { Button } from "@/components/ui/button"
-import { Slider } from "@/components/ui/slider"
-import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select"
-import { Popover, PopoverContent, PopoverTrigger } from "@/components/ui/popover"
-import { Settings, Type, Palette, RotateCcw } from "lucide-react"
+import { useState } from "react";
+import { Button } from "@/components/ui/button";
+import { Slider } from "@/components/ui/slider";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
+import {
+  Popover,
+  PopoverContent,
+  PopoverTrigger,
+} from "@/components/ui/popover";
+import { Settings, Type, Palette, RotateCcw } from "lucide-react";
+import { fontMap } from "@/app/fontMap";
 
 interface ReaderSettings {
-  fontSize: number
-  fontFamily: string
-  theme: string
-  lineHeight: number
+  fontSize: number;
+  fontFamily: string;
+  theme: string;
+  lineHeight: number;
 }
 
 interface ReaderSettingsProps {
-  settings: ReaderSettings
-  onSettingsChange: (settings: ReaderSettings) => void
+  settings: ReaderSettings;
+  onSettingsChange: (settings: ReaderSettings) => void;
 }
 
-export function ReaderSettings({ settings, onSettingsChange }: ReaderSettingsProps) {
-  const [isOpen, setIsOpen] = useState(false)
+export function ReaderSettings({
+  settings,
+  onSettingsChange,
+}: ReaderSettingsProps) {
+  const [isOpen, setIsOpen] = useState(false);
 
   const updateSetting = (key: keyof ReaderSettings, value: any) => {
     onSettingsChange({
       ...settings,
       [key]: value,
-    })
-  }
+    });
+  };
 
   const resetSettings = () => {
     onSettingsChange({
       fontSize: 16,
-      fontFamily: "Inter",
+      fontFamily: fontMap.Inter.className,
       theme: "light",
       lineHeight: 1.6,
-    })
-  }
+    });
+  };
 
   return (
     <Popover open={isOpen} onOpenChange={setIsOpen}>
       <PopoverTrigger asChild>
-        <Button variant="outline" size="sm" className="ml-auto flex items-center gap-2">
+        <Button
+          variant="outline"
+          size="sm"
+          className="ml-auto flex items-center gap-2"
+        >
           <Settings className="h-4 w-4" />
           <span className="hidden sm:inline">Tùy chỉnh</span>
         </Button>
@@ -76,23 +94,27 @@ export function ReaderSettings({ settings, onSettingsChange }: ReaderSettingsPro
 
           <div>
             <label className="text-sm font-medium mb-2 block">Font chữ</label>
-            <Select value={settings.fontFamily} onValueChange={(value) => updateSetting("fontFamily", value)}>
+            <Select
+              value={settings.fontFamily}
+              onValueChange={(value) => updateSetting("fontFamily", value)}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
               <SelectContent>
-                <SelectItem value="Inter">Inter (Mặc định)</SelectItem>
-                <SelectItem value="Georgia">Georgia (Serif)</SelectItem>
-                <SelectItem value="Times New Roman">Times New Roman</SelectItem>
-                <SelectItem value="Arial">Arial (Sans-serif)</SelectItem>
-                <SelectItem value="Roboto">Roboto</SelectItem>
-                <SelectItem value="Open Sans">Open Sans</SelectItem>
+                {Object.values(fontMap).map((font) => (
+                  <SelectItem key={font.label} value={font.className}>
+                    {font.label}
+                  </SelectItem>
+                ))}
               </SelectContent>
             </Select>
           </div>
 
           <div>
-            <label className="text-sm font-medium mb-2 block">Khoảng cách dòng: {settings.lineHeight.toFixed(1)}</label>
+            <label className="text-sm font-medium mb-2 block">
+              Khoảng cách dòng: {settings.lineHeight.toFixed(1)}
+            </label>
             <Slider
               value={[settings.lineHeight]}
               onValueChange={(value) => updateSetting("lineHeight", value[0])}
@@ -112,7 +134,10 @@ export function ReaderSettings({ settings, onSettingsChange }: ReaderSettingsPro
               <Palette className="h-4 w-4" />
               Chủ đề màu
             </label>
-            <Select value={settings.theme} onValueChange={(value) => updateSetting("theme", value)}>
+            <Select
+              value={settings.theme}
+              onValueChange={(value) => updateSetting("theme", value)}
+            >
               <SelectTrigger>
                 <SelectValue />
               </SelectTrigger>
@@ -126,5 +151,5 @@ export function ReaderSettings({ settings, onSettingsChange }: ReaderSettingsPro
         </div>
       </PopoverContent>
     </Popover>
-  )
+  );
 }

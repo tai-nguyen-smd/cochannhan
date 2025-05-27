@@ -1,12 +1,11 @@
 import type React from "react";
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/header";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
+import { fontMap } from "./fontMap";
 
-const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
   title: "Cổ Chân Nhân",
@@ -22,6 +21,9 @@ export default function RootLayout({
 }: {
   children: React.ReactNode;
 }) {
+  const fontVars = Object.values(fontMap)
+    .map((f) => f.variable)
+    .join(" ");
   return (
     <html lang="vi">
       <head>
@@ -31,7 +33,7 @@ export default function RootLayout({
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Cổ Chân Nhân" />
       </head>
-      <body className={inter.className}>
+      <body className={fontVars}>
         <ThemeProvider
           attribute="class"
           defaultTheme="system"

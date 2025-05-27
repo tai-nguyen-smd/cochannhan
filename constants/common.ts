@@ -17,5 +17,5 @@ export const LOCAL_STORAGE_KEY = {
   CHAPTERS: (bookSlug: string) => `chapters-${bookSlug}`,
   READER_SETTINGS: "reader-settings",
   CURRENT_CHAPTER: (bookSlug: string) => `current-chapter-${bookSlug}`,
-  BOOK_PROGRESS: (bookSlug: string) => `book-progress-${bookSlug}`,
+  BOOKMARKS: (bookSlug: string) => `bookmarks-${bookSlug}`,
 };
