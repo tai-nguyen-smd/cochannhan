@@ -1,5 +1,5 @@
 import type React from "react";
-import type { Metadata } from "next";
+import type { Metadata, Viewport } from "next";
 import "./globals.css";
 import { ThemeProvider } from "@/components/theme-provider";
 import { Header } from "@/components/layout/header";
@@ -9,11 +9,16 @@ import { GoogleAnalytics } from "@next/third-parties/google";
 
 export const metadata: Metadata = {
   title: "Cổ Chân Nhân",
-  description: "Đọc sách trực tuyến với trải nghiệm tuyệt vời",
+  description: "Cổ Chân Nhân",
   manifest: "/manifest.json",
-  themeColor: "#000000",
-  viewport: "width=device-width, initial-scale=1, maximum-scale=1",
   generator: "Taivn",
+};
+export const viewport: Viewport = {
+  themeColor: "#000000",
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  
 };
 
 export default function RootLayout({
@@ -37,7 +42,6 @@ export default function RootLayout({
         <ThemeProvider
           attribute="class"
           defaultTheme="system"
-
           enableSystem
           disableTransitionOnChange
         >

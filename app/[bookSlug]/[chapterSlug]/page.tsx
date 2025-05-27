@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import ChapterMenuDrawer from "@/components/reader/chapter-menu-drawer";
 import { ReaderContent } from "@/components/reader/reader-content";
 import { ReaderSettings } from "@/components/reader/reader-settings";
@@ -11,7 +11,6 @@ import { useServices } from "@/hooks/use-services";
 import { Chapter } from "@/types/type";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
-import { useRouter } from "next/navigation";
 
 export default function ChapterPage() {
   const params = useParams();
