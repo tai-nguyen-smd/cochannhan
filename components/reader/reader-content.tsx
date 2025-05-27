@@ -6,6 +6,7 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import ReactMarkdown from "react-markdown";
 import { useSwipe } from "@/hooks/use-swipe";
 import { Book, Chapter, ChapterListItem, ReaderSettings } from "@/types/type";
+import { calculateProgress } from "@/lib/books";
 
 interface ReaderContentProps {
   book: Book;
@@ -92,7 +93,7 @@ export function ReaderContent({
               {currentChapter.title}
             </h1>
             <p className="text-xs sm:text-sm text-muted-foreground">
-              Chương {currentChapter.id} / {chapterList.length}
+              {calculateProgress(currentChapter.order, chapterList.length)}%
             </p>
           </div>
           <div className="flex items-center gap-1 sm:gap-2 ml-4">
@@ -144,6 +145,7 @@ export function ReaderContent({
                     style={{
                       color: themeStyles.color,
                       fontSize: `${settings.fontSize + 8}px`,
+                      fontWeight: "bold",
                     }}
                   >
                     {children}
@@ -154,6 +156,7 @@ export function ReaderContent({
                     style={{
                       color: themeStyles.color,
                       fontSize: `${settings.fontSize + 4}px`,
+                      fontWeight: "bold",
                     }}
                   >
                     {children}
@@ -164,6 +167,7 @@ export function ReaderContent({
                     style={{
                       color: themeStyles.color,
                       fontSize: `${settings.fontSize + 2}px`,
+                      fontWeight: "bold",
                     }}
                   >
                     {children}
@@ -225,7 +229,7 @@ export function ReaderContent({
           </Button>
 
           <div className="text-xs sm:text-sm text-muted-foreground px-4">
-            {currentChapter.id} / {chapterList.length}
+            {currentChapter.order} / {chapterList.length}
           </div>
 
           <Button
