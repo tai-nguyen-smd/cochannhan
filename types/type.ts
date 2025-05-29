@@ -32,3 +32,11 @@ export type ReaderSettings = {
   theme: string;
   lineHeight: number;
 };
+
+export type LastReader = {
+  title: string;
+  bookSlug: string;
+  chapterSlug: string;
+  scrollPosition: number;
+  isNavigated: boolean;
+};

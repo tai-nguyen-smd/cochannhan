@@ -8,7 +8,7 @@ import { ReaderSettings } from "@/components/reader/reader-settings";
 import { useLocalStorage } from "usehooks-ts";
 import { LOCAL_STORAGE_KEY } from "@/constants/common";
 import { useServices } from "@/hooks/use-services";
-import { Chapter } from "@/types/type";
+import { Chapter, LastReader } from "@/types/type";
 import { Button } from "@/components/ui/button";
 import { ArrowLeft } from "lucide-react";
 
@@ -42,6 +42,10 @@ export default function ChapterPage() {
     LOCAL_STORAGE_KEY.CURRENT_CHAPTER(bookSlug),
     null
   );
+  const [lastReader, setLastReader] = useLocalStorage<LastReader | null>(
+    LOCAL_STORAGE_KEY.LAST_READER,
+    null
+  );
 
   useEffect(() => {
     const loadBook = async () => {
@@ -62,6 +66,18 @@ export default function ChapterPage() {
       loadBook();
     }
   }, [bookSlug, chapterSlug]);
+
+  useEffect(() => {
+    if (chapterData.currentChapter) {
+      setLastReader({
+        title: chapterData.currentChapter.title,
+        bookSlug,
+        chapterSlug,
+        scrollPosition: 0,
+        isNavigated: false,
+      });
+    }
+  }, [chapterData.currentChapter]);
 
   return (
     <div
