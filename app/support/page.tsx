@@ -42,9 +42,9 @@ export default function SupportPage() {
                     />
                   </div>
                   <p className="font-semibold">Quét mã QR</p>
-                  <p className="text-sm text-muted-foreground">
-                    Momo: 0764466624
-                  </p>
+                  <strong className="text-sm text-muted-foreground">
+                    Momo/Zalo: 0764466624
+                  </strong>
                 </div>
               </CardContent>
             </Card>
