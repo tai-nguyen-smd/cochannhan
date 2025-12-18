@@ -6,6 +6,7 @@ import { Header } from "@/components/layout/header";
 import { ScrollToTop } from "@/components/ui/scroll-to-top";
 import { fontMap } from "./fontMap";
 import { GoogleAnalytics } from "@next/third-parties/google";
+import { AppProvider } from "@/components/providers/app-provider";
 
 export const metadata: Metadata = {
   title: "Cổ Chân Nhân",
@@ -20,7 +21,7 @@ export const metadata: Metadata = {
   ],
   authors: [{ name: "Your Name" }],
   icons: [
-    { rel: "apple-touch-icon", url: "/favicon/icon-192x192.png" },
+    { rel: "apple-touch-icon", url: "/favicon/apple-touch-icon.png" },
     { rel: "icon", url: "/favicon/icon-192x192.png" },
   ],
 };
@@ -44,8 +45,6 @@ export default function RootLayout({
   return (
     <html lang="vi" suppressHydrationWarning>
       <head>
-        <link rel="icon" href="/favicon/icon-192x192.png" />
-        <link rel="apple-touch-icon" href="/favicon/icon-192x192.png" />
         <meta name="apple-mobile-web-app-capable" content="yes" />
         <meta name="apple-mobile-web-app-status-bar-style" content="default" />
         <meta name="apple-mobile-web-app-title" content="Cổ Chân Nhân" />
@@ -64,10 +63,11 @@ export default function RootLayout({
           enableSystem
           disableTransitionOnChange
         >
-          <Header />
-
-          {children}
-          <ScrollToTop />
+          <AppProvider>
+            <Header />
+            {children}
+            <ScrollToTop />
+          </AppProvider>
         </ThemeProvider>
       </body>
       <GoogleAnalytics gaId="G-10WDPX8V4W" />
