@@ -1,0 +1,75 @@
+import {
+  useInfiniteQuery,
+  useMutation,
+  useQuery,
+  useQueryClient,
+} from "@tanstack/react-query";
+import { commentService } from "@/services/comment.service";
+import { CACHE_TIME } from "./cache.const";
+import type { Comment, CommentWithReplies } from "@/types/comment";
+
+export const buildCommentTree = (comments: Comment[]): CommentWithReplies[] => {
+  const map = new Map<string, CommentWithReplies>();
+  const roots: CommentWithReplies[] = [];
+
+  comments.forEach((c) => map.set(c.id, { ...c, replies: [] }));
+
+  comments.forEach((c) => {
+    if (c.parent_id) {
+      map.get(c.parent_id)?.replies.push(map.get(c.id)!);
+    } else {
+      roots.push(map.get(c.id)!);
+    }
+  });
+
+  return roots;
+};
+
+export const useComments = (bookSlug: string, chapterSlug: string) => {
+  return useInfiniteQuery({
+    queryKey: ["comments", bookSlug, chapterSlug],
+    queryFn: async ({ pageParam }) => {
+      const res = await commentService.getCommentsWithReplies(
+        bookSlug,
+        chapterSlug,
+        pageParam
+      );
+
+      return {
+        ...res,
+        tree: buildCommentTree(res.comments),
+      };
+    },
+    initialPageParam: undefined as string | undefined,
+    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
+    staleTime: CACHE_TIME.FIVE_MINUTES,
+    gcTime: CACHE_TIME.THIRTY_MINUTES,
+  });
+};
+
+export const useAddComment = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: (comment: Omit<Comment, "id" | "createdAt">) =>
+      commentService.addComment(comment),
+
+    onSuccess: (_, v) => {
+      queryClient.invalidateQueries({
+        queryKey: ["comments", v.book_slug, v.chapter_slug],
+      });
+      queryClient.invalidateQueries({
+        queryKey: ["commentCount", v.book_slug, v.chapter_slug],
+      });
+    },
+  });
+};
+
+export const useCommentCount = (bookSlug: string, chapterSlug: string) => {
+  return useQuery({
+    queryKey: ["commentCount", bookSlug, chapterSlug],
+    queryFn: () => commentService.countAllComments(bookSlug, chapterSlug),
+    staleTime: CACHE_TIME.FIVE_MINUTES,
+    gcTime: CACHE_TIME.THIRTY_MINUTES,
+  });
+};

@@ -1,11 +1,21 @@
 export interface Comment {
   id: string;
-  userId: string;
-  userEmail?: string;
+
+  book_slug: string;
+  chapter_slug: string;
+
   content: string;
-  bookSlug: string;
-  chapterSlug: string;
-  parentId: string | null; // null for root comments
-  createdAt: number;
-  updatedAt?: number;
+
+  parent_id: string | null; // null = root, != null = reply
+
+  user_id: string;
+  username: string;
+  avatar_url?: string;
+
+  createdAt: string; // ISO string
 }
+
+
+export type CommentWithReplies = Comment & {
+  replies: Comment[];
+};

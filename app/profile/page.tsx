@@ -18,7 +18,10 @@ import { useProfile, useUpdateProfile } from "@/hooks/queries/profiles";
 import { useAuthStore } from "@/stores/auth.store";
 import { UserAvatar } from "@/components/auth/user-avatar";
 import { useBookmarkStore } from "@/stores/bookmark.store";
-import { useReaderSettingsStore } from "@/stores/reader-settings.store";
+import {
+  initialStateSettings,
+  useReaderSettingsStore,
+} from "@/stores/reader-settings.store";
 import { useRecentAccessStore } from "@/stores/recent-access.store";
 import { ReaderSettings } from "@/types/type";
 import { useTheme } from "next-themes";
@@ -59,7 +62,9 @@ export default function ProfilePage() {
   const syncDataFromCloud = async () => {
     setShowLoadConfirm(false);
     overrideBookmarks(profile?.bookmarks ?? {});
-    overrideSettings((profile?.reader_settings as ReaderSettings) ?? {});
+    overrideSettings(
+      (profile?.reader_settings as ReaderSettings) ?? initialStateSettings
+    );
     overrideRecentAccess(profile?.recent_access ?? []);
     setTheme(profile?.reader_settings?.theme ?? "light");
   };
@@ -129,7 +134,7 @@ export default function ProfilePage() {
               </Button>
               <Button
                 onClick={() => setShowLoadConfirm(true)}
-                disabled={isUploading}
+                disabled={!profile || isUploading}
                 variant="outline"
                 className="w-full justify-start"
               >

@@ -1,77 +1,91 @@
-// import {
-//   Timestamp,
-//   addDoc,
-//   collection,
-//   getDocs,
-//   limit,
-//   orderBy,
-//   query,
-//   serverTimestamp,
-//   startAfter,
-//   where,
-// } from "firebase/firestore";
-// import type { Comment } from "@/types/comment";
-// import { db } from "@/lib/firebase";
+import { supabase } from "@/lib/supabase";
+import type { Comment } from "@/types/comment";
 
-// class CommentService {
-//   private COLLECTION = "comments";
+const COMMENT_SCHEMA = "comments";
+class CommentService {
+  async addComment(
+    comment: Omit<Comment, "id" | "createdAt">
+  ): Promise<string> {
+    const { data, error } = await supabase
+      .from(COMMENT_SCHEMA)
+      .insert({
+        book_slug: comment.book_slug,
+        chapter_slug: comment.chapter_slug,
+        content: comment.content,
 
-//   async addComment(
-//     comment: Omit<Comment, "id" | "createdAt"> & { createdAt?: any },
-//   ): Promise<string> {
-//     const docRef = await addDoc(collection(db, this.COLLECTION), {
-//       ...comment,
-//       createdAt: serverTimestamp(),
-//     });
-//     return docRef.id;
-//   }
+        user_id: comment.user_id,
+        username: comment.username,
+        avatar_url: comment.avatar_url,
 
-//   async getComments(
-//     bookSlug: string,
-//     chapterSlug: string,
-//     lastDoc?: any,
-//     limitCount: number = 5,
-//   ): Promise<{ comments: Array<Comment>; lastDoc: any }> {
-//     try {
-//       let q = query(
-//         collection(db, this.COLLECTION),
-//         where("bookSlug", "==", bookSlug),
-//         where("chapterSlug", "==", chapterSlug),
-//         orderBy("createdAt", "desc"),
-//         limit(limitCount),
-//       );
+        parent_id: comment.parent_id ?? null,
+      })
+      .select("id")
+      .single();
 
-//       if (lastDoc) {
-//         q = query(q, startAfter(lastDoc));
-//       }
+    if (error) throw error;
+    return data.id;
+  }
 
-//       const snapshot = await getDocs(q);
-//       const comments = snapshot.docs.map((doc) => {
-//         const data = doc.data();
-//         return {
-//           id: doc.id,
-//           ...data,
-//           // Convert Firestore Timestamp to millis for easier frontend handling
-//           createdAt:
-//             data.createdAt instanceof Timestamp
-//               ? data.createdAt.toMillis()
-//               : Date.now(),
-//         } as Comment;
-//       });
+  async getCommentsWithReplies(
+    bookSlug: string,
+    chapterSlug: string,
+    cursor?: string
+  ): Promise<{ comments: Comment[]; nextCursor: string | null }> {
+    const { data, error } = await supabase.rpc(
+      "get_root_comments_with_replies",
+      {
+        p_book_slug: bookSlug,
+        p_chapter_slug: chapterSlug,
+        p_cursor: cursor ?? null,
+      }
+    );
 
-//       return {
-//         comments,
-//         lastDoc:
-//           // eslint-disable-next-line @typescript-eslint/no-unnecessary-condition
-//           snapshot.docs && snapshot.docs.length === limitCount
-//             ? snapshot.docs[snapshot.docs.length - 1]
-//             : null,
-//       };
-//     } catch (error) {
-//       console.error("Error fetching comments:", error);
-//       return { comments: [], lastDoc: null };
-//     }
-//   }
-// }
+    if (error) {
+      console.error(error);
+      return { comments: [], nextCursor: null };
+    }
 
-// export const commentService = new CommentService();
+    const comments = data.map(this.mapComment);
+    const roots = data.filter((c: Comment) => c.parent_id === null);
+
+    return {
+      comments,
+      nextCursor: roots[roots.length - 1].createdAt,
+    };
+  }
+
+  private mapComment(row: any): Comment {
+    return {
+      id: row.id,
+      book_slug: row.book_slug,
+      chapter_slug: row.chapter_slug,
+      content: row.content,
+
+      user_id: row.user_id,
+      username: row.username,
+      avatar_url: row.avatar_url,
+
+      parent_id: row.parent_id,
+      createdAt: row.created_at,
+    };
+  }
+  async countAllComments(
+    bookSlug: string,
+    chapterSlug: string
+  ): Promise<number> {
+    const { count, error } = await supabase
+      .from(COMMENT_SCHEMA)
+      .select("id", { count: "exact", head: true })
+      .eq("book_slug", bookSlug)
+      .eq("chapter_slug", chapterSlug);
+
+    if (error) {
+      console.error("Count all comments error:", error);
+      return 0;
+    }
+
+    return count ?? 0;
+  }
+}
+
+export const commentService = new CommentService();

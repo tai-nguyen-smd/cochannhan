@@ -17,6 +17,9 @@ import { recentAccessActions } from "@/stores/recent-access.store";
 import { useReaderSettingsStore } from "@/stores/reader-settings.store";
 import { useParams, useRouter } from "next/navigation";
 import { RandomTips } from "@/components/tips/random-tips";
+import { CommentFloatButton } from "@/components/comments/comment-float-button";
+import { CommentBottomSheet } from "@/components/comments/comment-bottom-sheet";
+import { useCommentCount } from "@/hooks/queries/comments";
 
 export default function ChapterPage() {
   const params = useParams();
@@ -25,6 +28,7 @@ export default function ChapterPage() {
   const chapterSlug = params.chapterSlug as string;
 
   const [showControl, setShowControl] = useState(false);
+  const [isCommentSheetOpen, setIsCommentSheetOpen] = useState(false);
 
   const { data: book } = useFetchBookBySlug(bookSlug);
   const { data: chapterList, isLoading: isLoadingChapterList } =
@@ -34,6 +38,8 @@ export default function ChapterPage() {
     isLoading,
     error,
   } = useFetchChapterData(bookSlug, chapterSlug);
+
+  const { data: commentCount = 0 } = useCommentCount(bookSlug, chapterSlug);
 
   const { settings } = useReaderSettingsStore();
 
@@ -113,6 +119,22 @@ export default function ChapterPage() {
         )}
       </div>
       <RandomTips />
+      
+      {/* Comment Floating Button */}
+      {!isLoading && chapterData?.currentChapter && (
+        <>
+          <CommentFloatButton
+            commentCount={commentCount}
+            onClick={() => setIsCommentSheetOpen(true)}
+          />
+          <CommentBottomSheet
+            bookSlug={bookSlug}
+            chapterSlug={chapterSlug}
+            open={isCommentSheetOpen}
+            onOpenChange={setIsCommentSheetOpen}
+          />
+        </>
+      )}
     </div>
   );
 }

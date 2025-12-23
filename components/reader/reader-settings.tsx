@@ -32,6 +32,8 @@ export function ReaderSettings() {
   const [isOpen, setIsOpen] = useState(false);
   const { theme, setTheme } = useTheme();
 
+  console.log({settings})
+  
   const updateSetting = (key: keyof ReaderSettings, value: any) => {
     updateSettings({
       ...settings,

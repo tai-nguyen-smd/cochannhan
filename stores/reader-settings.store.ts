@@ -6,7 +6,7 @@ import { debounceSave, loadFromLocalStorage } from "@/lib/localstorage";
 
 const STORAGE_KEY = "reader-settings-store";
 
-const initialState: ReaderSettings = {
+export const initialStateSettings: ReaderSettings = {
   fontSize: 16,
   fontFamily: "Inter",
   theme: "light",
@@ -14,7 +14,7 @@ const initialState: ReaderSettings = {
 };
 
 export const readerSettingsStore = new Store<ReaderSettings>(
-  loadFromLocalStorage(STORAGE_KEY, initialState)
+  loadFromLocalStorage(STORAGE_KEY, initialStateSettings)
 );
 
 // ✅ Auto-save to localStorage on state change
@@ -34,7 +34,7 @@ export const readerSettingsActions = {
 
   // Reset to default
   resetSettings: () => {
-    readerSettingsStore.setState(initialState);
+    readerSettingsStore.setState(initialStateSettings);
   },
 
   // Get current settings
