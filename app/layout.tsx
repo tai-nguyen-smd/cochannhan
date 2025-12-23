@@ -9,6 +9,7 @@ import { fontMap } from "./fontMap";
 import { GoogleAnalytics } from "@next/third-parties/google";
 import { QueryProvider } from "@/components/providers/query.provider";
 import { AuthProvider } from "@/components/providers/auth.provider";
+import { ProfileSyncProvider } from "@/components/providers/profile-sync.provider";
 import { Toaster } from "@/components/ui/sonner";
 
 export const metadata: Metadata = {
@@ -68,13 +69,15 @@ export default function RootLayout({
         >
           <QueryProvider>
             <AuthProvider>
-              <Header />
-              <div className="flex-1">
-                {children}
-              </div>
-              <Footer />
-              <ScrollToTop />
-              <Toaster />
+              <ProfileSyncProvider>
+                <Header />
+                <div className="flex-1">
+                  {children}
+                </div>
+                <Footer />
+                <ScrollToTop />
+                <Toaster />
+              </ProfileSyncProvider>
             </AuthProvider>
           </QueryProvider>
         </ThemeProvider>

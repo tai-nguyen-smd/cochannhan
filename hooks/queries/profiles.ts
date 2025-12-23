@@ -16,6 +16,7 @@ export const useProfile = () => {
       if (!user) throw new Error("No user");
       return profileService.getProfileInfo(user.id);
     },
+    enabled: !!user,
   });
 };
 
