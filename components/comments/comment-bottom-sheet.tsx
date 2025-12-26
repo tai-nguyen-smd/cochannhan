@@ -14,7 +14,7 @@ import { useComments } from "@/hooks/queries/comments";
 import { useAuthStore } from "@/stores/auth.store";
 import { Button } from "@/components/ui/button";
 import { Skeleton } from "@/components/ui/skeleton";
-import type { Comment } from "@/types/comment";
+import type { Comment, CommentWithReplies } from "@/types/comment";
 
 interface CommentBottomSheetProps {
   bookSlug: string;
@@ -30,24 +30,14 @@ export function CommentBottomSheet({
   onOpenChange,
 }: CommentBottomSheetProps) {
   const { user } = useAuthStore();
-  const {
-    data,
-    isLoading,
-    isFetched,
-    hasNextPage,
-    isFetchingNextPage,
-    fetchNextPage,
-  } = useComments(bookSlug, chapterSlug);
+  const { data, isLoading, isFetched } = useComments(bookSlug, chapterSlug);
 
-  // Flatten all pages into one array
-  const comments = data?.pages.flatMap((page) => page.comments) || [];
-
-  // Group comments into Root -> Children
-  const rootComments = comments.filter((c: Comment) => !c.parent_id);
-  const getReplies = (parentId: string) =>
-    comments.filter((c: Comment) => c.parent_id === parentId);
-
-  const totalComments = comments.length;
+  const comments = data?.tree || [];
+  const rootComments = comments.filter((c: CommentWithReplies) => !c.parent_id);
+  const totalComments = comments.reduce(
+    (acc, c) => acc + c.replies.length + 1,
+    0
+  );
 
   return (
     <Drawer open={open} onOpenChange={onOpenChange}>
@@ -98,9 +88,9 @@ export function CommentBottomSheet({
                   <div key={comment.id} className="space-y-3">
                     <CommentItem comment={comment} currentUserId={user?.id} />
                     {/* Render Replies */}
-                    {getReplies(comment.id).length > 0 && (
+                    {comment.replies.length > 0 && (
                       <div className="pl-4 space-y-3 border-l-2 border-muted ml-2">
-                        {getReplies(comment.id).map((reply) => (
+                        {comment.replies.map((reply) => (
                           <CommentItem
                             key={reply.id}
                             comment={reply}
@@ -112,46 +102,6 @@ export function CommentBottomSheet({
                     )}
                   </div>
                 ))
-              )}
-
-              {hasNextPage && (
-                <div className="pt-4 pb-2">
-                  <Button
-                    variant="outline"
-                    size="sm"
-                    onClick={() => fetchNextPage()}
-                    disabled={isFetchingNextPage}
-                    className="w-full text-sm font-medium"
-                  >
-                    {isFetchingNextPage ? (
-                      <>
-                        <Loader2 className="h-4 w-4 mr-2 animate-spin" />
-                        Đang tải...
-                      </>
-                    ) : (
-                      <>
-                        <ChevronDown className="h-4 w-4 mr-2" />
-                        Xem thêm bình luận
-                      </>
-                    )}
-                  </Button>
-                </div>
-              )}
-
-              {isFetchingNextPage && (
-                <div className="space-y-4 pt-2">
-                  {[1, 2].map((i) => (
-                    <div key={i} className="space-y-3">
-                      <div className="flex items-start gap-3">
-                        <Skeleton className="h-10 w-10 rounded-full" />
-                        <div className="flex-1 space-y-2">
-                          <Skeleton className="h-4 w-24" />
-                          <Skeleton className="h-16 w-full" />
-                        </div>
-                      </div>
-                    </div>
-                  ))}
-                </div>
               )}
             </div>
           </ScrollArea>

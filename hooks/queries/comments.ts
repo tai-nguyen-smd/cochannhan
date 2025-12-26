@@ -26,13 +26,12 @@ export const buildCommentTree = (comments: Comment[]): CommentWithReplies[] => {
 };
 
 export const useComments = (bookSlug: string, chapterSlug: string) => {
-  return useInfiniteQuery({
+  return useQuery({
     queryKey: ["comments", bookSlug, chapterSlug],
-    queryFn: async ({ pageParam }) => {
+    queryFn: async () => {
       const res = await commentService.getCommentsWithReplies(
         bookSlug,
-        chapterSlug,
-        pageParam
+        chapterSlug
       );
 
       return {
@@ -40,8 +39,6 @@ export const useComments = (bookSlug: string, chapterSlug: string) => {
         tree: buildCommentTree(res.comments),
       };
     },
-    initialPageParam: undefined as string | undefined,
-    getNextPageParam: (lastPage) => lastPage.nextCursor ?? undefined,
     staleTime: CACHE_TIME.FIVE_MINUTES,
     gcTime: CACHE_TIME.THIRTY_MINUTES,
   });

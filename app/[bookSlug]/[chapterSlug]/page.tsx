@@ -166,12 +166,14 @@ export default function ChapterPage() {
             commentCount={commentCount}
             onClick={() => setIsCommentSheetOpen(true)}
           />
-          <CommentBottomSheet
-            bookSlug={bookSlug}
-            chapterSlug={chapterSlug}
-            open={isCommentSheetOpen}
-            onOpenChange={setIsCommentSheetOpen}
-          />
+          {isCommentSheetOpen && (
+            <CommentBottomSheet
+              bookSlug={bookSlug}
+              chapterSlug={chapterSlug}
+              open={isCommentSheetOpen}
+              onOpenChange={setIsCommentSheetOpen}
+            />
+          )}
         </>
       )}
     </div>
