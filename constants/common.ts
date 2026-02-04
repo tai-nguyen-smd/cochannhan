@@ -24,7 +24,7 @@ export const mockBooks: Book[] = [
   },
   {
     id: "2",
-    author: "Gu Zhen Re",
+    author: "Gu Zhen Ren",
     cover: "",
     description: "",
     slug: "reverend-insanity",

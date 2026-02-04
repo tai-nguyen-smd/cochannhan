@@ -1,6 +1,8 @@
 "use client";
 
 import { BookOpen, FileText, Play, RotateCcw, User } from "lucide-react";
+import Image from "next/image";
+import { useRouter } from "next/navigation";
 import { Progress } from "../ui/progress";
 import { Button } from "../ui/button";
 import ChapterMenu from "./chapter-menu";
@@ -14,7 +16,6 @@ import {
 } from "@/components/ui/card";
 import { useRecentAccessStore } from "@/stores/recent-access.store";
 import { calculateProgress } from "@/lib/books";
-import { useRouter } from "next/navigation";
 
 interface BookOverviewProps {
   book: Book;
@@ -73,12 +74,13 @@ export function BookOverview({
           <div className="lg:col-span-1">
             <Card>
               <CardHeader className="text-center">
-                <div className="aspect-[2/3] w-full max-w-64 mx-auto mb-4">
-                  <img
-                    loading="lazy"
+                <div className="aspect-[2/3] w-full max-w-64 mx-auto mb-4 relative rounded-lg overflow-hidden shadow-lg">
+                  <Image
                     src={book?.coverImage || "/placeholder.svg"}
                     alt={book?.title || ""}
-                    className="w-full h-full object-cover rounded-lg shadow-lg"
+                    fill
+                    sizes="256px"
+                    className="object-cover"
                   />
                 </div>
                 <CardTitle className="text-xl sm:text-2xl">
