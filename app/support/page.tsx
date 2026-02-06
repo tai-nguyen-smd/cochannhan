@@ -1,3 +1,4 @@
+import Image from "next/image";
 import {
   Card,
   CardContent,
@@ -35,9 +36,11 @@ export default function SupportPage() {
               <CardContent className="space-y-4">
                 <div className="text-center">
                   <div className="bg-white p-4 rounded-lg inline-block mb-4">
-                    <img
+                    <Image
                       src="/images/QR.jpg"
                       alt="QR Code MoMo"
+                      width={384}
+                      height={384}
                       className="w-96 h-auto"
                     />
                   </div>

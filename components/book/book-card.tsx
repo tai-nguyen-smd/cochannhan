@@ -1,6 +1,8 @@
 "use client";
 
 import { BookOpen, User } from "lucide-react";
+import Image from "next/image";
+import Link from "next/link";
 import type { Book } from "@/types/type";
 import {
   Card,
@@ -9,7 +11,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import Link from "next/link";
 
 interface BookCardProps {
   book: Book;
@@ -20,12 +21,13 @@ export function BookCard({ book }: BookCardProps) {
     <Link href={`/${book.slug}`}>
       <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
         <CardHeader className="p-2 sm:p-3">
-          <div className="aspect-[2/3] relative mb-2">
-            <img
-              loading="lazy"
+          <div className="aspect-[2/3] relative mb-2 overflow-hidden rounded-md">
+            <Image
               src={book.coverImage || "/placeholder.svg"}
               alt={book.title || ""}
-              className="w-full h-full object-cover rounded-md group-hover:scale-105 transition-transform duration-200"
+              fill
+              sizes="(max-width: 640px) 50vw, 33vw"
+              className="object-cover group-hover:scale-105 transition-transform duration-200"
             />
           </div>
           <CardTitle className="text-sm sm:text-lg line-clamp-2 leading-tight">

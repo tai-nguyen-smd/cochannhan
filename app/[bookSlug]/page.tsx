@@ -1,25 +1,14 @@
-"use client";
+import { getStaticBookSlugs } from "@/lib/static-params";
+import { BookPageClient } from "./book-page-client";
 
-import { useParams } from "next/navigation";
-import { BookOverview } from "@/components/book/book-overview";
-import { useFetchBookBySlug, useFetchChapterList } from "@/hooks/queries/books";
+export async function generateStaticParams() {
+  return getStaticBookSlugs();
+}
 
-export default function BookPage() {
-  const params = useParams();
-  const slug = params.bookSlug as string;
-
-  const { data: book } = useFetchBookBySlug(slug);
-  const { data: chapterList, isLoading } = useFetchChapterList(slug);
-
-  return (
-    <div className="min-h-screen bg-background">
-      {book && (
-        <BookOverview
-          book={book}
-          chapters={chapterList || []}
-          isLoading={isLoading}
-        />
-      )}
-    </div>
-  );
+export default function BookPage({
+  params,
+}: {
+  params: Promise<{ bookSlug: string }>;
+}) {
+  return <BookPageClient />;
 }

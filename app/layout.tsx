@@ -24,10 +24,6 @@ export const metadata: Metadata = {
     "cổ chân nhân",
   ],
   authors: [{ name: "Your Name" }],
-  icons: [
-    { rel: "apple-touch-icon", url: "/favicon/apple-touch-icon.png" },
-    { rel: "icon", url: "/favicon/icon-192x192.png" },
-  ],
 };
 
 export const viewport: Viewport = {

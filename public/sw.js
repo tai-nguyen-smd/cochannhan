@@ -1,5 +1,5 @@
 const CACHE_NAME = "co-chan-nhan-cache-v1"
-const urlsToCache = ["/", "/static/js/bundle.js", "/static/css/main.css", "/favicon/icon-192x192.png", "/favicon/icon-512x512.png"]
+const urlsToCache = ["/", "/manifest.json", "/favicon/icon-192x192.png", "/favicon/icon-512x512.png"]
 
 // Install event
 self.addEventListener("install", (event) => {
