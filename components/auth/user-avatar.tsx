@@ -62,7 +62,7 @@ export function UserAvatar({ className }: { className?: string }) {
         onClick={() => setOpen((v) => !v)}
       >
         <Avatar className={cn("h-10 w-10", className)}>
-          <AvatarImage src={user?.user_metadata?.avatar_url} />
+          <AvatarImage src={user?.user_metadata?.avatar_url} alt={displayName} />
           <AvatarFallback>{getInitials()}</AvatarFallback>
         </Avatar>
       </Button>

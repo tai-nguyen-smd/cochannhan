@@ -50,7 +50,7 @@ export function Header() {
           <MobileNav />
 
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2">
+          <Link href="/" className="flex items-center space-x-2" aria-label="Cổ Chân Nhân">
             <Book className="h-5 w-5 sm:h-6 sm:w-6" />
             <span className="font-bold text-base sm:text-lg hidden sm:inline-block">
               Cổ Chân Nhân
