@@ -62,11 +62,10 @@ export const useFetchChapterData = (bookSlug: string, chapterSlug: string) => {
     queryKey: BOOK_QUERY_KEYS.chapters.data(bookSlug, chapterSlug),
     queryFn: async () => {
       try {
-        // 1. Lấy chapterList từ cache hoặc fetch
         const chapterList = await queryClient.ensureQueryData({
           queryKey: BOOK_QUERY_KEYS.chapters.all(bookSlug),
           queryFn: () => bookService.fetchChapterList(bookSlug),
-          staleTime: CACHE_TIME.PERMANENT, // Đảm bảo consistent với query gốc
+          staleTime: CACHE_TIME.PERMANENT, 
         });
 
         // 2. Lấy current chapter từ cache hoặc fetch
@@ -85,16 +84,6 @@ export const useFetchChapterData = (bookSlug: string, chapterSlug: string) => {
         const prevMeta = chapterList.find((c) => c.order === currentOrder - 1);
         const nextMeta = chapterList.find((c) => c.order === currentOrder + 1);
 
-        // 5. ✅ PREFETCH nextChapter ở background (không block)
-        if (nextMeta) {
-          queryClient.prefetchQuery({
-            queryKey: BOOK_QUERY_KEYS.chapters.detail(bookSlug, nextMeta.slug),
-            queryFn: () =>
-              bookService.fetchChapterBySlug(bookSlug, nextMeta.slug),
-            staleTime: CACHE_TIME.PERMANENT,
-          });
-        }
-
         return {
           currentChapter,
           prevMeta,
@@ -105,10 +94,9 @@ export const useFetchChapterData = (bookSlug: string, chapterSlug: string) => {
         throw error;
       }
     },
-    staleTime: CACHE_TIME.PERMANENT, // ✅ Consistent với các query con
+    staleTime: CACHE_TIME.PERMANENT, 
     gcTime: CACHE_TIME.PERMANENT,
     // Thêm retry logic nếu cần
-    retry: 1,
-    retryDelay: (attemptIndex) => Math.min(1000 * 2 ** attemptIndex, 30000),
+    retry: 0,
   });
 };

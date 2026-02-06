@@ -18,7 +18,7 @@ interface BookCardProps {
 
 export function BookCard({ book }: BookCardProps) {
   return (
-    <Link href={`/${book.slug}`}>
+    <Link prefetch={false} href={`/${book.slug}`}>
       <Card className="h-full hover:shadow-lg transition-shadow cursor-pointer group">
         <CardHeader className="p-2 sm:p-3">
           <div className="aspect-2/3 relative mb-2 overflow-hidden rounded-md">

@@ -16,7 +16,6 @@ export const metadata: Metadata = {
   title: "Cổ Chân Nhân",
   description: "Cổ Chân Nhân",
   generator: "Next.js",
-  manifest: "/manifest.json",
   keywords: [
     "cổ chân nhân",
     "đọc truyện",

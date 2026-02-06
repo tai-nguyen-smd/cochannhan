@@ -30,7 +30,7 @@ export default function NotFound() {
 
         <div className="flex flex-col sm:flex-row gap-3 justify-center">
           <Button asChild size="lg" className="w-full sm:w-auto">
-            <Link href="/">
+            <Link prefetch={false} href="/">
               <Home className="mr-2 h-4 w-4" />
               Về trang chủ
             </Link>

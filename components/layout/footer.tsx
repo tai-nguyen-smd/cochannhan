@@ -22,7 +22,7 @@ export function Footer() {
             <h3 className="font-semibold mb-4">Liên Kết</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link 
+                <Link prefetch={false} 
                   href="/" 
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
@@ -30,7 +30,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link 
+                <Link prefetch={false} 
                   href="/feedback" 
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
@@ -38,7 +38,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link 
+                <Link prefetch={false} 
                   href="/support" 
                   className="text-muted-foreground hover:text-primary transition-colors flex items-center gap-1"
                 >
@@ -54,7 +54,7 @@ export function Footer() {
             <h3 className="font-semibold mb-4">Chính Sách</h3>
             <ul className="space-y-2 text-sm">
               <li>
-                <Link 
+                <Link prefetch={false} 
                   href="/privacy-policy" 
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >
@@ -62,7 +62,7 @@ export function Footer() {
                 </Link>
               </li>
               <li>
-                <Link 
+                <Link prefetch={false} 
                   href="/terms-of-service" 
                   className="text-muted-foreground hover:text-primary transition-colors"
                 >

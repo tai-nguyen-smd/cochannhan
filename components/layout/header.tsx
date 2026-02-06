@@ -38,7 +38,7 @@ export function Header() {
             <span>{item.label}</span>
           </Link>
         );
-      })}
+      })} 
     </>
   );
 
@@ -50,7 +50,7 @@ export function Header() {
           <MobileNav />
 
           {/* Logo */}
-          <Link href="/" className="flex items-center space-x-2" aria-label="Cổ Chân Nhân">
+          <Link prefetch={false} href="/" className="flex items-center space-x-2" aria-label="Cổ Chân Nhân">
             <Book className="h-5 w-5 sm:h-6 sm:w-6" />
             <span className="font-bold text-base sm:text-lg hidden sm:inline-block">
               Cổ Chân Nhân
@@ -69,7 +69,7 @@ export function Header() {
           {user ? (
             <UserAvatar />
           ) : (
-            <Link href="/login">
+            <Link prefetch={false} href="/login">
               <Button size="sm" className="flex items-center gap-2">
                 <LogIn className="h-4 w-4" />
                 <span className="hidden sm:inline">Đăng Nhập</span>
