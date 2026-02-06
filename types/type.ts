@@ -24,6 +24,7 @@ export type Chapter = {
   content: string;
   order: number;
   volume: string;
+  error?: string;
 };
 
 export type ReaderSettings = {

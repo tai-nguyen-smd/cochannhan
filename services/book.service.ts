@@ -33,14 +33,19 @@ export class BookService implements IBookService {
     bookSlug: string,
     chapterSlug: string
   ): Promise<Chapter | null> => {
+    try {
     const book = this.fetchBookBySlug(bookSlug);
     if (!book) {
       return null;
     }
     const chapter = await fetch(
       `${SUPABASE_STORAGE_URL}/${book.slug}/chapters/${chapterSlug}.json`
-    ).then((res) => res.json());
-    return chapter;
+      ).then((res) => res.json());
+      return chapter;
+    } catch (error) {
+      console.error("Error fetching chapter:", error);
+      return null;
+    }
   };
 }
 
