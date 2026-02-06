@@ -4,6 +4,7 @@ import type { Book, Chapter, ChapterListItem } from "@/types/type";
 import { mockBooks } from "@/constants/common";
 import { IBookService } from "./interfaces/i-book.interface";
 
+const SUPABASE_STORAGE_URL = 'https://uenyspihbfhpcgdkhceb.supabase.co/storage/v1/object/public/cochannhan-reader'
 export class BookService implements IBookService {
   constructor() {}
 
@@ -22,7 +23,7 @@ export class BookService implements IBookService {
     if (!book) {
       return [];
     }
-    const chapters = await fetch(`/${book.slug}/chapters.json`).then((res) =>
+    const chapters = await fetch(`${SUPABASE_STORAGE_URL}/${book.slug}/chapters.json`).then((res) =>
       res.json()
     );
     return chapters;
@@ -37,7 +38,7 @@ export class BookService implements IBookService {
       return null;
     }
     const chapter = await fetch(
-      `/${book.slug}/chapters/${chapterSlug}.json`
+      `${SUPABASE_STORAGE_URL}/${book.slug}/chapters/${chapterSlug}.json`
     ).then((res) => res.json());
     return chapter;
   };

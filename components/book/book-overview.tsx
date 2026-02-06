@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/card";
 import { useRecentAccessStore } from "@/stores/recent-access.store";
 import { calculateProgress } from "@/lib/books";
+import { getReadingUrl } from "@/lib/reading-url";
 
 interface BookOverviewProps {
   book: Book;
@@ -44,15 +45,15 @@ export function BookOverview({
 
   const handleContinueReading = () => {
     if (lastReadChapter) {
-      router.push(`/${book.slug}/${lastReadChapter.chapterSlug}`);
+      router.push(getReadingUrl(book.slug, lastReadChapter.chapterSlug));
     } else if (chapters.length > 0) {
-      router.push(`/${book.slug}/${chapters[0].slug}`);
+      router.push(getReadingUrl(book.slug, chapters[0].slug));
     }
   };
 
   const handleStartFromBeginning = () => {
     if (chapters.length > 0) {
-      router.push(`/${book.slug}/${chapters[0].slug}`);
+      router.push(getReadingUrl(book.slug, chapters[0].slug));
     }
   };
 

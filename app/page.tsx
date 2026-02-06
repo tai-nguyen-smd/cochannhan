@@ -7,6 +7,7 @@ import { BookGrid } from "@/components/book/book-grid";
 import { Button } from "@/components/ui/button";
 import { useRecentAccessStore } from "@/stores/recent-access.store";
 import { useRouter } from "next/navigation";
+import { getReadingUrl } from "@/lib/reading-url";
 
 export default function HomePage() {
   const { data: books } = useFetchAllBooks();
@@ -15,7 +16,7 @@ export default function HomePage() {
   const mounted = useMounted();
 
   const handleRecentAccess = (bookSlug: string, chapterSlug: string) => {
-    router.push(`/${bookSlug}/${chapterSlug}`);
+    router.push(getReadingUrl(bookSlug, chapterSlug));
   };
 
   // Helper function to get book name from slug

@@ -33,11 +33,3 @@ export const mockBooks: Book[] = [
     coverImage: "/images/reverend-insanity.jpg",
   }
 ];
-
-export const LOCAL_STORAGE_KEY = {
-  CHAPTERS: (bookSlug: string) => `chapters-${bookSlug}`,
-  READER_SETTINGS: "reader-settings",
-  LAST_READER: "last-reader",
-  CURRENT_CHAPTER: (bookSlug: string) => `current-chapter-${bookSlug}`,
-  BOOKMARKS: (bookSlug: string) => `bookmarks-${bookSlug}`,
-};

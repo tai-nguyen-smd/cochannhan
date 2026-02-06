@@ -14,6 +14,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useBookmarkStore } from "@/stores/bookmark.store";
 import { useRouter } from "next/navigation";
+import { getReadingUrl } from "@/lib/reading-url";
 
 interface ChapterRowProps {
   chapters: ChapterListItem[];
@@ -46,7 +47,7 @@ function ChapterMenu({
 
   const handleChapterSelect = useCallback(
     (chapter: ChapterListItem) => {
-      router.push(`/${book?.slug}/${chapter.slug}`);
+      if (book?.slug) router.push(getReadingUrl(book.slug, chapter.slug));
     },
     [router, book?.slug]
   );

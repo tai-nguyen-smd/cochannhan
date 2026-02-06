@@ -10,6 +10,7 @@ import { cn } from "@/lib/utils";
 import { useReaderSettingsStore } from "@/stores/reader-settings.store";
 import { useRouter } from "next/navigation";
 import { calculateProgress } from "@/lib/books";
+import { getReadingUrl } from "@/lib/reading-url";
 
 interface ReaderContentProps {
   book: Book;
@@ -38,13 +39,13 @@ export function ReaderContent({
 
   const handlePrevious = () => {
     if (canGoPrevious) {
-      router.push(`/${book.slug}/${prevMeta.slug}`);
+      router.push(getReadingUrl(book.slug, prevMeta.slug));
     }
   };
 
   const handleNext = () => {
     if (canGoNext) {
-      router.push(`/${book.slug}/${nextMeta.slug}`);
+      router.push(getReadingUrl(book.slug, nextMeta.slug));
     }
   };
 
