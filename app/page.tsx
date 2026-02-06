@@ -2,6 +2,7 @@
 
 import { ArrowRight, BookOpen, Clock } from "lucide-react";
 import { useFetchAllBooks } from "@/hooks/queries/books";
+import { useMounted } from "@/hooks/use-mounted";
 import { BookGrid } from "@/components/book/book-grid";
 import { Button } from "@/components/ui/button";
 import { useRecentAccessStore } from "@/stores/recent-access.store";
@@ -11,6 +12,7 @@ export default function HomePage() {
   const { data: books } = useFetchAllBooks();
   const router = useRouter();
   const { items: recentItems } = useRecentAccessStore();
+  const mounted = useMounted();
 
   const handleRecentAccess = (bookSlug: string, chapterSlug: string) => {
     router.push(`/${bookSlug}/${chapterSlug}`);
@@ -35,8 +37,8 @@ export default function HomePage() {
           </p>
         </div>
 
-        {/* Recent Access Section */}
-        {displayItems.length > 0 && (
+        {/* Recent Access Section - only after mount to avoid hydration mismatch with persisted store */}
+        {mounted && displayItems.length > 0 && (
           <div className="mb-6">
             <div className="flex items-center gap-2 mb-3">
               <Clock className="h-4 w-4 text-muted-foreground" />

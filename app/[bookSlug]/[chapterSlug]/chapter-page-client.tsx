@@ -23,12 +23,15 @@ import { useUpdateProfile } from "@/hooks/queries/profiles";
 import { useAuthStore } from "@/stores/auth.store";
 import { useBookmarkStore } from "@/stores/bookmark.store";
 import { useRecentAccessStore } from "@/stores/recent-access.store";
+import { useMounted } from "@/hooks/use-mounted";
+import Loading from "@/app/loading";
 
 export function ChapterPageClient() {
   const params = useParams();
   const router = useRouter();
   const bookSlug = params.bookSlug as string;
   const chapterSlug = params.chapterSlug as string;
+  const mounted = useMounted();
 
   const [showControl, setShowControl] = useState(false);
   const [isCommentSheetOpen, setIsCommentSheetOpen] = useState(false);
@@ -80,6 +83,12 @@ export function ChapterPageClient() {
       });
     }
   }, [chapterData?.currentChapter, bookSlug, chapterSlug]);
+
+
+  if (!mounted) {
+    return <Loading />;
+  }
+
 
   return (
     <div

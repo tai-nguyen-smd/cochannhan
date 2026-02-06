@@ -13,6 +13,8 @@ import {
   DrawerTitle,
   DrawerTrigger,
 } from "@/components/ui/drawer";
+import { useMounted } from "@/hooks/use-mounted";
+import Loading from "@/app/loading";
 
 interface ChapterMenuProps {
   book: Book;
@@ -28,6 +30,11 @@ function ChapterMenuDrawer({
   isLoading,
 }: ChapterMenuProps) {
   const [isOpen, setIsOpen] = useState(false);
+  const mounted = useMounted();
+
+  if (!mounted) {
+    return <Loading />;
+  }
 
   return (
     <Drawer open={isOpen} onOpenChange={setIsOpen}>
