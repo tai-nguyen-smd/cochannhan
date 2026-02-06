@@ -37,18 +37,29 @@ export function ReaderContent({
   const canGoPrevious = prevMeta !== undefined;
   const canGoNext = nextMeta !== undefined;
 
+  const scrollToTop = () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    });
+  };
   const handlePrevious = () => {
     if (canGoPrevious) {
+      setTimeout(() => {
+        scrollToTop();
+      }, 100);
       router.push(getReadingUrl(book.slug, prevMeta.slug));
     }
   };
 
   const handleNext = () => {
     if (canGoNext) {
+      setTimeout(() => {
+        scrollToTop();
+      }, 100);
       router.push(getReadingUrl(book.slug, nextMeta.slug));
     }
   };
-
   return (
     <div className="flex-1 flex flex-col">
       {/* Chapter Header */}
