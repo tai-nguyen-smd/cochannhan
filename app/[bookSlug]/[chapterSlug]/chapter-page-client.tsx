@@ -95,10 +95,9 @@ export function ChapterPageClient() {
             : undefined
         }
       >
-        <div className="flex items-center gap-4 p-4 border-b bg-background/95 ">
+        <div className="flex items-center gap-2 p-4 border-b bg-background/95 ">
           <Button onClick={() => router.replace(`/${bookSlug}`)}>
             <ArrowLeft />
-            Back
           </Button>
           {book && chapterList && chapterData?.currentChapter && (
             <ChapterMenuDrawer
@@ -128,7 +127,9 @@ export function ChapterPageClient() {
           </div>
         )}
       </div>
-      <RandomTips />
+      {!isLoading && (
+        <RandomTips />
+      )}
 
       {!isLoading && chapterData?.currentChapter && (
         <>

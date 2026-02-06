@@ -2,20 +2,20 @@
 
 import { useState } from "react";
 import { Book, Menu } from "lucide-react";
+import { Badge } from "@/components/ui/badge";
 import { Button } from "@/components/ui/button";
-import { Separator } from "@/components/ui/separator";
 import {
-  Sheet,
-  SheetContent,
-  SheetHeader,
-  SheetTitle,
-  SheetTrigger,
-} from "@/components/ui/sheet";
+  Drawer,
+  DrawerContent,
+  DrawerHeader,
+  DrawerTitle,
+  DrawerTrigger,
+} from "@/components/ui/drawer";
+import { Separator } from "@/components/ui/separator";
 import { NAV_ITEMS } from "@/constants/navigation";
-import { useRouter } from "next/navigation";
 import { useUnreadFeedbackCount } from "@/hooks/queries/feedback";
 import { useAuthStore } from "@/stores/auth.store";
-import { Badge } from "@/components/ui/badge";
+import { useRouter } from "next/navigation";
 
 export function MobileNav() {
   const [open, setOpen] = useState(false);
@@ -29,21 +29,21 @@ export function MobileNav() {
   };
 
   return (
-    <Sheet open={open} onOpenChange={setOpen}>
-      <SheetTrigger asChild>
-        <Button variant="ghost" size="icon" className="md:hidden">
+    <Drawer open={open} onOpenChange={setOpen}>
+      <DrawerTrigger asChild>
+        <Button variant="secondary" size="icon" className="md:hidden rounded-full">
           <Menu className="h-5 w-5" />
           <span className="sr-only">Toggle menu</span>
         </Button>
-      </SheetTrigger>
-      <SheetContent side="left" className="w-[300px] sm:w-[400px]">
-        <SheetHeader>
-          <SheetTitle className="text-left flex items-center gap-2">
+      </DrawerTrigger>
+      <DrawerContent>
+        <DrawerHeader className="text-left">
+          <DrawerTitle className="flex items-center gap-2">
             <Book className="h-5 w-5" />
             Cổ Chân Nhân
-          </SheetTitle>
-        </SheetHeader>
-        <div className="flex flex-col gap-4 py-4">
+          </DrawerTitle>
+        </DrawerHeader>
+        <div className="flex flex-col gap-4 px-4 pb-6">
           <div className="flex flex-col space-y-3">
             {NAV_ITEMS.map((item) => {
               const isFeedback = item.href === "/feedback";
@@ -70,7 +70,7 @@ export function MobileNav() {
           </div>
           <Separator />
         </div>
-      </SheetContent>
-    </Sheet>
+      </DrawerContent>
+    </Drawer>
   );
 }

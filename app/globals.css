@@ -72,7 +72,7 @@
     --destructive: 0 65% 50%; /* Red for errors */
     --destructive-foreground: 42 25% 96%; /* Warm cream white */
     --border: 38 15% 85%; /* Light sepia border */
-    --input: 38 15% 85%; /* Light sepia border */
+    --input: 215 16% 34%; /* Slate-500 */
     --ring: 35 45% 35%; /* Rich sepia brown */
     --radius: 1rem;
     --spacing: 0.295rem;
@@ -111,7 +111,7 @@
     --destructive: 0 65% 55%; /* Slightly brighter red */
     --destructive-foreground: 42 25% 90%; /* Warm cream */
     --border: 30 15% 20%; /* Dark sepia border */
-    --input: 30 15% 20%; /* Dark sepia border */
+    --input: 215 16% 34%; /* Slate-500 */
     --ring: 40 35% 65%; /* Warm sepia gold */
     --chart-1: 40 35% 65%;
     --chart-2: 38 25% 55%;
