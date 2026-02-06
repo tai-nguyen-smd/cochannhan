@@ -1,0 +1,8 @@
+name = "cochannhan"
+compatibility_date = "2025-02-06"
+
+[site]
+bucket = "./out"
+
+[[pages_build_output_dir]]
+pages_build_output_dir = "out"
